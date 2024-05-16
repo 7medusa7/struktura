@@ -1,0 +1,54 @@
+#include <iostream>
+#include <functional>
+
+using namespace std;
+
+// Функция для расчета мощности насоса с типом "C"
+double nas_cH(double a) {
+    cout << "nas_cH рассчитан " << 1 * a << endl;
+    return 1 * a;
+}
+
+double nas_cK(double a) {
+    cout << "nas_cK рассчитан " << 2 * a << endl;
+    return 2 * a;
+}
+
+// Функция для расчета мощности насоса с типом "R"
+double nas_rH(double a) {
+    cout << "nas_rH рассчитан " << 4 * a << endl;
+    return 4 * a;
+}
+
+double nas_rK(double a) {
+    cout << "nas_rK рассчитан " << 8 * a << endl;
+    return 8 * a;
+}
+
+// Функция для создания функции расчета мощности насоса на основе переданных функций
+function<double(double, double)> nas(function<double(double)> h_func, function<double(double)> k_func) {
+    cout << "Возвращена функция для конкретного насоса исходя из переданных функций" << endl;
+    return [h_func, k_func](double h, double k) {
+        cout << "Вызывана функция для конкретного насоса" << endl;
+        return h_func(h) * k_func(k);
+    };
+}
+
+int main() {
+    double h, k;
+
+    cout << "Введите значение h: ";
+    cin >> h;
+    cout << "Введите значение k: ";
+    cin >> k;
+
+    auto nasCFunc = nas(nas_cH, nas_cK);
+    double p1 = nasCFunc(h, k);
+    cout << "nas_p: " << p1 << endl;
+
+    auto nasRFunc = nas(nas_rH, nas_rK);
+    double p2 = nasRFunc(h, k);
+    cout << "nas_p: " << p2 << endl;
+
+    return 0;
+}
