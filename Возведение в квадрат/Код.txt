@@ -1,0 +1,55 @@
+def square_iterative(n):
+    result = 1
+    if n < 0:
+        n = -n
+    while n > 0:
+        if n % 2 == 1:  # Если n нечетное
+            result *= n
+        n //= 2  # Делим n пополам
+        result *= result  # Возводим результат в квадрат
+    return result
+
+# Пример использования:
+number = int(input("Введите число: "))
+print("Результат возведения в квадрат:", square_iterative(number))
+
+
+#2
+(defun sum (term a next b)
+  (defun iter (a result)
+    (if (> a b)
+        result
+        (iter (next a) (+ result (term a)))))
+  (iter a 0))
+
+#######################
+#1
+def square_iterative(base, exponent):
+    result = 1
+    
+    for _ in range(exponent):
+        result *= base
+    
+    return result
+
+# Пример использования:
+base = 2
+exponent = 5
+result = square_iterative(base, exponent)
+print(f"{base} возводится в квадрат {exponent} раз: {result}")
+
+#2
+def sum(term, a, next, b):
+    if a > b:
+        return 0
+    else:
+        return term(a) + sum(term, next(a), next, b)
+
+def iter(a, result):
+    if a > 10:  # Замени 10 на желаемый предел
+        return result
+    else:
+        return iter(a + 1, result + a)
+
+# Пример вызова функции sum
+print(sum(lambda x: x, 1, lambda x: x + 1, 5))
