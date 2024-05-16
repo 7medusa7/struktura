@@ -1,0 +1,44 @@
+#include <iostream>
+
+class MyClass {
+private:
+    int value; // Приватное поле, доступное только внутри класса
+    
+public:
+    // Перегрузка конструктора
+    MyClass() {
+        value = 0; // Устанавливаем значение по умолчанию
+    }
+    
+    MyClass(int val) {
+        value = val;
+    }
+    
+    // Метод для получения значения value (getter)
+    int getValue() {
+        return value;
+    }
+    
+    // Метод для установки значения value (setter)
+    void setValue(int val) {
+        value = val;
+    }
+};
+
+int main() {
+    // Создаем объекты класса MyClass с использованием разных конструкторов
+    MyClass obj1; // Используем конструктор по умолчанию
+    MyClass obj2(10); // Используем конструктор с параметром
+    
+    // Печатаем значения объектов
+    std::cout << "Value of obj1: " << obj1.getValue() << std::endl; // Выведет 0
+    std::cout << "Value of obj2: " << obj2.getValue() << std::endl; // Выведет 10
+    
+    // Меняем значение поля value через setter
+    obj1.setValue(5);
+    
+    // Печатаем новое значение obj1
+    std::cout << "New value of obj1: " << obj1.getValue() << std::endl; // Выведет 5
+    
+    return 0;
+}

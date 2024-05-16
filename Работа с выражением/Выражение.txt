@@ -1,0 +1,67 @@
+#include <iostream>
+#include <functional>
+
+// Функция для деления 1 на f1
+auto fun1 = [](int a, int b) {
+    return 1.0 / (a + b);
+};
+
+// Функция для выбора математической операции
+auto fun2 = [](char operation) -> std::function<double(double, double)> {
+    switch (operation) {
+        case '+':
+            return std::plus<double>();
+        case '-':
+            return std::minus<double>();
+        case '*':
+            return std::multiplies<double>();
+        case '/':
+            return std::divides<double>();
+        default:
+            throw std::invalid_argument("Invalid operation");
+    }
+};
+
+// Функция для вычисления суммы с использованием fun1, fun2 и fun3
+double fun3(int startA, int startB, int step, int n, std::function<double(int, int)> f1, std::function<double(double, double)> f2) {
+    double result = 0;
+
+    std::cout << "Выражение: ";
+    for (int i = 0; i < n; ++i) {
+        if (i > 0) {
+            std::cout << (fun2('+') ? " + " : " - ");
+        }
+        std::cout << "1/(" << startA << " + " << startB << ")";
+        result = f2(result, f1(startA, startB));
+        startA += step;  // Увеличиваем a на шаг
+        startB += step;  // Увеличиваем b на шаг
+    }
+
+    std::cout << std::endl;
+    return result;
+}
+
+int main() {
+    int startA, startB, step, n;
+    char operation;
+
+    // Ввод параметров с консоли
+    std::cout << "Введите начальное значение a: ";
+    std::cin >> startA;
+    std::cout << "Введите начальное значение b: ";
+    std::cin >> startB;
+    std::cout << "Введите шаг увеличения a и b: ";
+    std::cin >> step;
+    std::cout << "Введите количество слагаемых n: ";
+    std::cin >> n;
+    std::cout << "Введите операцию (+, -, *, /): ";
+    std::cin >> operation;
+
+    // Вычисляем сумму с использованием fun1, fun2 и fun3
+    double result = fun3(startA, startB, step, n, fun1, fun2(operation));
+
+    // Выводим результат
+    std::cout << "Результат: " << result << std::endl;
+
+    return 0;
+}

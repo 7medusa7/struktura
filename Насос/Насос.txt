@@ -1,0 +1,66 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+// Определение класса для насоса
+class Pump {
+public:
+    virtual double power(double flowRate) const = 0;
+};
+
+// Класс для роторного насоса
+class RotaryPump : public Pump {
+public:
+    double power(double flowRate) const override {
+        return pow(flowRate, 2); // Мощность растет пропорционально квадрату расхода
+    }
+};
+
+// Класс для центробежного насоса
+class CentrifugalPump : public Pump {
+public:
+    double power(double flowRate) const override {
+        return pow(flowRate, 2.5); // Мощность растет более быстро
+    }
+};
+
+int main() {
+    // Ввод значения расхода через консоль
+    double flowRate;
+    cout << "Введите значение расхода: ";
+    cin >> flowRate;
+
+    // Создание объектов насосов
+    RotaryPump rotaryPump;
+    CentrifugalPump centrifugalPump;
+
+    // Выбор типа насоса
+    cout << "Выберите тип насоса:" << endl;
+    cout << "1. Роторный насос" << endl;
+    cout << "2. Центробежный насос" << endl;
+
+    int choice;
+    cin >> choice;
+
+    Pump* pump;
+    switch (choice) {
+        case 1:
+            pump = &rotaryPump;
+            break;
+        case 2:
+            pump = &centrifugalPump;
+            break;
+        default:
+            cerr << "Неверный выбор." << endl;
+            return 1;
+    }
+
+    // Расчет параметров насоса
+    double power = pump->power(flowRate);
+
+    // Вывод результата
+    cout << "Мощность насоса: " << power << endl;
+
+    return 0;
+}

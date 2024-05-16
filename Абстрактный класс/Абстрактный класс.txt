@@ -1,0 +1,68 @@
+#include <iostream>
+
+// Абстрактный класс "Фигура"
+class Shape {
+public:
+    // Виртуальная функция для вычисления площади
+    virtual double area() const = 0;
+    
+    // Виртуальная функция для вывода информации о фигуре
+    virtual void display() const = 0;
+    
+    // Виртуальный деструктор
+    virtual ~Shape() {}
+};
+
+// Класс для круга, наследующийся от абстрактного класса "Фигура"
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r) : radius(r) {}
+
+    // Переопределение метода area() для круга
+    double area() const override {
+        return 3.14159 * radius * radius;
+    }
+
+    // Переопределение метода display() для круга
+    void display() const override {
+        std::cout << "Circle with radius " << radius << std::endl;
+    }
+};
+
+// Класс для прямоугольника, наследующийся от абстрактного класса "Фигура"
+class Rectangle : public Shape {
+private:
+    double width;
+    double height;
+
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+
+    // Переопределение метода area() для прямоугольника
+    double area() const override {
+        return width * height;
+    }
+
+    // Переопределение метода display() для прямоугольника
+    void display() const override {
+        std::cout << "Rectangle with width " << width << " and height " << height << std::endl;
+    }
+};
+
+int main() {
+    // Создание объектов круга и прямоугольника
+    Circle circle(5);
+    Rectangle rectangle(4, 6);
+
+    // Вызов методов area() и display() для каждой фигуры
+    std::cout << "Area of circle: " << circle.area() << std::endl;
+    circle.display();
+
+    std::cout << "Area of rectangle: " << rectangle.area() << std::endl;
+    rectangle.display();
+
+    return 0;
+}
